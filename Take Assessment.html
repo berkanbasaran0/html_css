@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<!-- saved from url=(0089)https://assessment.netacad.net/virtuoso/delivery/pub-doc/2.0/assessment/lti.1.0/exam.html -->
+<html dir="ltr" lang="tr.tr" class="cui"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script async="" src="./Take Assessment_files/adrum-ext.206c403a1a532b310b15ea4509f4902b.js.indir"></script><script type="text/javascript" async="" src="./Take Assessment_files/ga.js.indir"></script><script>
+    window['adrum-start-time'] = new Date().getTime();
+    window["adrum-app-key"] = 'AD-AAB-AAD-FJT';
+  </script>
+  <script src="./Take Assessment_files/adrum.js.indir"></script>
+
+
+    <title>Take Assessment</title>
+    <link type="text/css" rel="stylesheet" href="./Take Assessment_files/style_assessment.css">
+    <link type="text/css" rel="stylesheet" href="./Take Assessment_files/jquery-ui-custom.css">
+    <link type="text/css" rel="stylesheet" href="./Take Assessment_files/common.css">
+    <link type="text/css" rel="stylesheet" href="./Take Assessment_files/alerts.css">
+    
+    <link rel="stylesheet" type="text/css" href="./Take Assessment_files/default.css">
+    <link type="text/css" rel="stylesheet" href="./Take Assessment_files/takeexam.css">
+    <style>
+
+      .hidden {
+        display: none;
+        height: 0;
+        width: 0;
+      }
+    
+    </style>
+    <script type="text/javascript" src="./Take Assessment_files/examResponse.js.indir"></script>
+    
+    <script type="text/javascript" src="./Take Assessment_files/examInit.js.indir"></script>
+    <script type="text/javascript" src="./Take Assessment_files/examReposition.js.indir"></script>
+    <script type="text/javascript" src="./Take Assessment_files/jquery-1.12.4.min.js.indir"></script>
+    <script type="text/javascript" src="./Take Assessment_files/jquery-ui-1.12.1.min.js.indir"></script>
+    <script type="text/javascript" src="./Take Assessment_files/lti_exam.js.indir"></script>
+    
+    <script type="text/javascript" src="./Take Assessment_files/highlight.pack.js.indir"></script>
+    <script type="text/javascript">
+
+      vds.cache.set('THEME', 'rapport');
+      vds.cache.set('STYLE', 'base');
+      vds.cache.set('LANGUAGE', 'tr.tr');
+      
+        vds.cache.set('SLIX', 'sk4plp135bi81ef9ppc0o75n3');
+      
+      vds.cache.set('CLIENT_ID', '39762568');
+
+      vds.cache.set('EXAM_OF_TOTAL', 'of TOTAL_PAGES');
+      vds.cache.set('CONFIRM_OK_LABEL', 'OK');
+
+      vds.cache.set('previous', 'Previous');
+      vds.cache.set('next', 'Next');
+      vds.cache.set('answered', 'Answered');
+      vds.cache.set('unanswered', 'Unanswered');
+      vds.cache.set('notviewed', 'Not Viewed');
+      vds.cache.set('submit', 'Submit');
+      
+      vds.cache.set('pt_connecting', 'Connecting...');
+      vds.cache.set('pt_loading', 'Loading...');
+      vds.cache.set('pt_loaded', 'Loaded');
+      vds.cache.set('pt_saving', 'Saving...');
+      vds.cache.set('pt_saved', 'Saved');
+      vds.cache.set('pt_error', 'Error');
+      vds.cache.set('pt_details_error', 'Unable to retrieve details.');
+
+      vds.dom.preload('/themes/rapport/css/images/ui-bg_flat_0_eeeeee_40x100.png');
+      vds.dom.preload('/themes/rapport/css/images/ui-icons_ff0000_256x240.png');
+      
+      var SLIX = 'sk4plp135bi81ef9ppc0o75n3'; // used by ptapi
+      var er_id = '214889253'; // used to identify window
+      var client_id = '39762568'; // used to connect to PT Player
+      var er_marker = '456F392B717757654549334F6F753751726A547173673D3D'; // used to connect to PT Player
+      var pt_message = 'wdXczCfc_tTZzNn04dzZ3Obj2Mr3vuv4'; // used to connect to PT Player
+
+       
+        var PT_INITIALIZATION_STATUS = 'SUCCEEDED';
+      
+
+      // SSAI/T configuration parameters.
+      var flashInteractive = true;
+      var flashInterface = 'learner';
+      var flashPrefix = 'ssflash/';
+		   
+		  if (window.opener && window.opener !== window) {
+		      try {
+		    		window.opener.location.reload();
+		      } catch (e) {
+		        vds.logger.warn('unable to reload parent window');
+		      }
+		  }
+		 
+
+      var vdscore = new Core(this);
+      vdscore.init();
+      
+      function init() {
+        $('#info').show();
+        $('#questions').show();
+        $('#navbarhover').show();
+        $('#navbar').show();
+        window.addEventListener('resize', function(event) {
+          vds.services.renderServices.render();
+        }, false);
+        
+        vds.services.renderServices.render();  		
+      }
+
+      function buildQuestion(question) {
+        var nodes;
+        var element = questionsView.getElementByQuestion(question);
+        repositionQuestion('AI' + question.id, true);
+        nodes = element.querySelectorAll('.response-header.vertical');
+        for (var i = 0; i < nodes.length; i++) {
+          VerticalText.apply(nodes.item(i));
+        }
+        nodes = element.querySelectorAll('[data-matpt-ident]');
+        for (var i = 0; i < nodes.length; i++) {
+           	new vds.views.PTMOView(ptapi, nodes.item(i));
+        }
+      }
+
+      function fetchQuestion(question) {
+        if (!question || !questionsView) {
+          return;
+        }
+        
+        vds.logger.debug('fetch question #' + question.number + ' [' + question.id + ']');
+        question.setLoading(true);
+        var url= '/virtuoso/delivery/pub-doc/2.0/single_exam_question.html';
+        var element = questionsView.getElementByQuestion(question);
+        element.classList.add('loading');
+        var data = {
+          
+            SLIX: 'sk4plp135bi81ef9ppc0o75n3',
+          
+          THEME: 'rapport',
+          STYLE: 'base',
+          LANGUAGE: 'tr.tr',
+          QUESTION_NUMBER: question.number
+        };
+        vds.tasks.add(function(callback) {
+          vds.logger.debug('fetching question #' + question.number + ' [' + question.id + ']');
+          jQuery.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            timeout: 10000,
+            success: function(data) {
+              vds.logger.debug('fetched question #' + question.number + ' [' + question.id + ']');
+              $(element).html(data);
+              element.classList.remove('loading');
+              question.setLoading(false);
+              question.setLoaded(true);
+              buildQuestion(question);
+
+              callback();
+            },
+            error: function() {
+              vds.logger.error('unable to fetch question #' + question.number + ' [' + question.id + ']');
+              $(".question.loading").addClass("hidden");
+              $(".question.loading").removeClass("loading");
+              $('#error-dialog').dialog('open');
+              question.setLoading(false);
+              callback();
+            }
+          });
+        });
+      }
+
+      var questionsView;
+      var assessment = new vds.models.Assessment();
+
+      function buildQuestionInfo(data) {
+        for (var i = 0; i < data.length; i++) {
+          var datum = data[i];
+          var id = datum.id.substring(datum.id.indexOf('-') + 1);
+          var question = new vds.models.Question(i + 1, id, datum.type, datum.hasResponse, datum.hasPtmo);
+          assessment.addQuestion(question);
+        }
+        assessment.addEventListener('beforechange', function(event) {
+          var question = assessment.getCurrent();
+          if (question && question.isLoaded()) {
+            vds.services.responseService.sendResponses(question,false);
+          }
+          if (ptapi.isLoaded()) {
+            ptapi.unloadPTItem();
+          }
+        });
+        assessment.addEventListener('change', function(event) {
+          var question = assessment.getCurrent();
+          var data = {
+                  
+                    SLIX: 'sk4plp135bi81ef9ppc0o75n3'
+                  
+                };
+          
+          	jQuery.getJSON('/virtuoso/delivery/pub-doc/services/xapi/question/' + question.id, data, function(data) {});
+          if (!question.isLoading() && !question.isLoaded()) {
+            fetchQuestion(question);
+          }
+          
+        });
+        var infoView = new vds.views.InfoView(assessment, document.getElementById('info'));
+        var navBarView = new vds.views.NavBarView(assessment, document.getElementById('navbar'));
+        questionsView = new vds.views.QuestionsView(assessment, document.getElementById('questions'));
+        assessment.setCurrent(assessment.firstQuestion);
+      }
+
+      function fetchQuestionInfo() {
+        vds.logger.debug('fetch question info');
+        vds.tasks.add(function(callback) {
+          vds.logger.debug('fetching question info');
+          jQuery.ajax({
+            dataType: 'json',
+            url: '/virtuoso/delivery/pub-doc/services/assessment/item/summary',
+            type: 'GET',
+            data: {
+              
+                SLIX: 'sk4plp135bi81ef9ppc0o75n3'
+              
+            },
+            success: function(data) {
+              vds.logger.debug('fetched question info')
+              buildQuestionInfo(data);
+              init();
+              callback();
+            },
+            error: function() {
+              vds.logger.error('unable to fetch question info');
+              $('#error-dialog').dialog('open');
+              callback();
+            }
+          });
+        });
+      }
+
+      $(document).ready(function() {
+    	$('#info').hide();
+    	$('#questions').hide();
+        $('#navbarhover').hide();
+        $('#navbar').hide();
+        $('#error-dialog').dialog({
+          autoOpen: false,
+          modal: true,
+          buttons: {
+            'OK': function() {
+              $(this).dialog('close');
+            }
+          }
+        });
+
+        var endTime;
+        var input = document.getElementById('end_time');
+        if (input.value != '') {
+          endTime = input.value;
+        } else {
+          endTime = Date.now() + 3239984;
+        }
+        input.value = endTime;
+        assessment.endTime = endTime;
+
+        
+
+          window.addEventListener('beforeunload', function() {
+            if (ptapi && ptapi.isLoaded()) {
+              ptapi.unload();
+            }
+          });
+
+          ptapi.initialize(client_id, function() {
+            try {
+              vdsMessaging.sendMessage("setData:" + er_marker + "###" + pt_message);
+              vdsMessaging.sendMessage('refreshStatus');
+            } catch (err) {
+              console.log("Error communicating with PT Player: " + err);
+            }
+          });
+
+        
+
+        fetchQuestionInfo();
+        $(window).unload(function() {
+          if (!assessment.submitted) {
+        	var question = assessment.getCurrent();
+            if (question && question.isLoaded()) {
+              vds.services.responseService.sendResponses(question,true);
+            }
+          }
+        });
+       
+      });
+      
+      var handleRadioButtonEvent = function(event){
+     	 if (event.keyCode && event.keyCode !== 32) {return;}
+     	 if (event.keyCode && event.keyCode === 32) {
+     		event.preventDefault();
+    		 }
+     	 
+     	 if (this.hasAttribute("data-radio-is-checked") && this.getAttribute("data-radio-is-checked") === "true"){
+      		this.checked = false;
+      		$("[name='" + this.getAttribute("name") + "']").attr("data-radio-is-checked", false);
+      	} else{
+      		$("[name='" + this.getAttribute("name") + "']").attr("data-radio-is-checked", false);
+      		this.setAttribute("data-radio-is-checked", true);
+      		this.checked = true;
+      	}
+      };
+      
+      $(document).on("click","input[type='RADIO']", handleRadioButtonEvent);  
+      $(document).on("keyup","input[type='RADIO']", handleRadioButtonEvent);
+    </script>  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-31020351-1' ]);
+		_gaq.push([ '_trackPageview' ]);
+
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+  </head>
+  <body class="cui" style="zoom: 1;">
+    <div id="core" name="core" class="core">    
+      <nav id="breadcrumbs">
+        <ul class="breadcrumb">
+          <li class="non-nav">Take Assessment</li>
+        </ul>
+      </nav>
+      <main>
+      <heading>
+      <input type="hidden" id="end_time" name="end_time" value="1611920496827">
+      
+       
+        
+          <h1 id="hdr" class="course-heading" aria-level="1"><div class="course-name">ITN (Version 7.00) - Ethernet Kavramları Sınavı</div>
+        
+        
+      
+      <div id="info" style="display: block;">
+        <div id="timer" class="ui-widget">
+          <div class="ui-icon ui-icon-clock" role="img" alt="Time Remaining" title="Time Remaining"></div>
+          <time id="timeleft">00:53:16</time>
+        </div>
+        <div id="pager" class="ui-widget">
+          <div class="ui-icon ui-icon-document" role="img" alt="Page" title="Page"></div>
+          <span id="pagerText">3 of 34</span>
+        </div>
+      </div>
+      <div style="clear:both;"></div>
+     	</h1>
+      </heading>      
+      <hr id="examHr">
+      <div id="questions" style="display: block; position: absolute; width: 1815px; height: 687.167px; top: 94.8541px; left: 0px;"><div class="question hidden" data-ident="it_231244">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="item">
+  <script type="text/javascript">
+    
+      prev_name.push("RESPONSE_MCSA_it_231244"); 
+      prev_value.push("231244=1276775");
+    
+  </script>
+          <!-- WRAPPER -->
+        <!-- START MCSA, MCMA, FIB -->
+        <div class="Text" id="AIit_231244TextDiv">
+          <div>
+            <form onsubmit="return false;" name="AIit_231244">
+              <p tabindex="0" id="knet-it_231244-long-description" class="sr-only item-long-description">
+                1 Hangisi çoklu yayın MAC adresidir?
+              </p>
+              <fieldset class="questionFieldset">
+                <legend>
+                  <div class="ai-stem surveyHeader">
+                    <span class="questionNum" aria-hidden="true">
+                      1
+                    </span>
+                    <span class="questionText" aria-hidden="true">
+                      <span class="mattext">
+                        Hangisi çoklu yayın MAC adresidir?
+                      </span>
+                    </span>
+                  </div>
+                </legend>
+                <ul class="coreContent">
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_231244_1276777" name="RESPONSE_MCSA_it_231244" value="1276777">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          00-26-0F-4B-00-3E
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_231244_1276774" name="RESPONSE_MCSA_it_231244" value="1276774">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          FF-FF-FF-FF-FF-FF
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_231244_1276776" name="RESPONSE_MCSA_it_231244" value="1276776">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          01-00-5E-00-00-03
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_231244_1276775" name="RESPONSE_MCSA_it_231244" value="1276775">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          5C-26-0A-4B-19-3E
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <div class="skip-question-navigation-container">
+                      <a tabindex="0" class="skip-question-navigation" href="javascript:document.querySelector(&#39;.current button&#39;).focus();">
+                        Navigation Bar
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+        <script type="text/javascript">
+Question.index++;
+Question[Question.index] = new QuestionObj("MCSA","AIit_231244","RESPONSE_MCSA_it_231244",1);
+Question[Question.index].isTestletItem = false;
+Question[Question.index].response_labels[1] = "231244";
+        </script>
+        <!-- END MCSA, MCMA, FIB -->
+        <!-- WRAPPER -->
+
+
+
+</div>
+</div><div class="question hidden" data-ident="it_393434">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="item">
+  <script type="text/javascript">
+    
+      prev_name.push("RESPONSE_MCSA_it_393434"); 
+      prev_value.push("393434=2244015");
+    
+  </script>
+          <!-- WRAPPER -->
+        <!-- START MCSA, MCMA, FIB -->
+        <div class="Text" id="AIit_393434TextDiv">
+          <div>
+            <form onsubmit="return false;" name="AIit_393434">
+              <p tabindex="0" id="knet-it_393434-long-description" class="sr-only item-long-description">
+                2 Kesilmiş anahtarlama yöntemiyle karşılaştırıldığında, depola ve ilet anahtarlama yönteminin, ne gibi bir avantajı vardır?
+              </p>
+              <fieldset class="questionFieldset">
+                <legend>
+                  <div class="ai-stem surveyHeader">
+                    <span class="questionNum" aria-hidden="true">
+                      2
+                    </span>
+                    <span class="questionText" aria-hidden="true">
+                      <span class="mattext">
+                        Kesilmiş anahtarlama yöntemiyle karşılaştırıldığında, depola ve ilet anahtarlama yönteminin, ne gibi bir avantajı vardır?
+                      </span>
+                    </span>
+                  </div>
+                </legend>
+                <ul class="coreContent">
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_393434_2244015" name="RESPONSE_MCSA_it_393434" value="2244015">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          IPv4 3. ve 4.Katman bilgilerini kullanarak çerçeve yönlendirme
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_393434_2244014" name="RESPONSE_MCSA_it_393434" value="2244014">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          daha hızlı çerçeve iletme
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_393434_2244012" name="RESPONSE_MCSA_it_393434" value="2244012">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          çarpışma algılama
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_393434_2244013" name="RESPONSE_MCSA_it_393434" value="2244013">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          çerçeve hata denetimi
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <div class="skip-question-navigation-container">
+                      <a tabindex="0" class="skip-question-navigation" href="javascript:document.querySelector(&#39;.current button&#39;).focus();">
+                        Navigation Bar
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+        <script type="text/javascript">
+Question.index++;
+Question[Question.index] = new QuestionObj("MCSA","AIit_393434","RESPONSE_MCSA_it_393434",1);
+Question[Question.index].isTestletItem = false;
+Question[Question.index].response_labels[1] = "393434";
+        </script>
+        <!-- END MCSA, MCMA, FIB -->
+        <!-- WRAPPER -->
+
+
+
+</div>
+</div><div class="question" data-ident="it_393512">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="item">
+  <script type="text/javascript">
+    
+  </script>
+          <!-- WRAPPER -->
+        <!-- START MCSA, MCMA, FIB -->
+        <div class="Text" id="AIit_393512TextDiv">
+          <div>
+            <form onsubmit="return false;" name="AIit_393512">
+              <p tabindex="0" id="knet-it_393512-long-description" class="sr-only item-long-description">
+                3 Depola ve ilet anahtarlama yöntemi kullanımda olduğunda, bir hata kontrolü gerçekleştirmek için Ethernet çerçevesinin hangi kısmı kullanılır?
+              </p>
+              <fieldset class="questionFieldset">
+                <legend>
+                  <div class="ai-stem surveyHeader">
+                    <span class="questionNum" aria-hidden="true">
+                      3
+                    </span>
+                    <span class="questionText" aria-hidden="true">
+                      <span class="mattext">
+                        Depola ve ilet anahtarlama yöntemi kullanımda olduğunda, bir hata kontrolü gerçekleştirmek için Ethernet çerçevesinin hangi kısmı kullanılır?
+                        <br>
+                      </span>
+                    </span>
+                  </div>
+                </legend>
+                <ul class="coreContent">
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_393512_2244329" name="RESPONSE_MCSA_it_393512" value="2244329">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          başlıktaki protokol türü
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_393512_2244326" name="RESPONSE_MCSA_it_393512" value="2244326">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          Artbilgide CRC
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_393512_2244327" name="RESPONSE_MCSA_it_393512" value="2244327">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          başlıktaki kaynak MAC adresi
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="ai-option-label">
+                      <input type="RADIO" id="RESPONSE_MCSA_it_393512_2244328" name="RESPONSE_MCSA_it_393512" value="2244328">
+                      <span class="ai-option">
+                        <span class="mattext">
+                          başlıktaki hedef MAC adresi
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <div class="skip-question-navigation-container">
+                      <a tabindex="0" class="skip-question-navigation" href="javascript:document.querySelector(&#39;.current button&#39;).focus();">
+                        Navigation Bar
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+        <script type="text/javascript">
+Question.index++;
+Question[Question.index] = new QuestionObj("MCSA","AIit_393512","RESPONSE_MCSA_it_393512",1);
+Question[Question.index].isTestletItem = false;
+Question[Question.index].response_labels[1] = "393512";
+        </script>
+        <!-- END MCSA, MCMA, FIB -->
+        <!-- WRAPPER -->
+
+
+
+</div>
+</div><div class="question hidden" data-ident="it_393391"></div><div class="question hidden" data-ident="it_231221"></div><div class="question hidden" data-ident="it_393513"></div><div class="question hidden" data-ident="it_393382"></div><div class="question hidden" data-ident="it_231245"></div><div class="question hidden" data-ident="it_393392"></div><div class="question hidden" data-ident="it_393536"></div><div class="question hidden" data-ident="it_231273"></div><div class="question hidden" data-ident="it_393660"></div><div class="question hidden" data-ident="it_393673"></div><div class="question hidden" data-ident="it_393835"></div><div class="question hidden" data-ident="it_393498"></div><div class="question hidden" data-ident="it_393828"></div><div class="question hidden" data-ident="it_393431"></div><div class="question hidden" data-ident="it_393397"></div><div class="question hidden" data-ident="it_393834"></div><div class="question hidden" data-ident="it_231223"></div><div class="question hidden" data-ident="it_230901"></div><div class="question hidden" data-ident="it_393837"></div><div class="question hidden" data-ident="it_230756"></div><div class="question hidden" data-ident="it_393396"></div><div class="question hidden" data-ident="it_393836"></div><div class="question hidden" data-ident="it_393412"></div><div class="question hidden" data-ident="it_393385"></div><div class="question hidden" data-ident="it_393485"></div><div class="question hidden" data-ident="it_393647"></div><div class="question hidden" data-ident="it_393619"></div><div class="question hidden" data-ident="it_393838"></div><div class="question hidden" data-ident="it_393497"></div><div class="question hidden" data-ident="it_393839"></div><div class="question hidden" data-ident="it_393496"></div></div>
+      <div id="navbarhover" class="ui-widget ui-corner-all" style="display: block; position: absolute; width: 1799px; height: 20px; padding-left: 0px; padding-right: 0px; top: 792px; left: 0px;"><span id="hovertext" class="ui-priority-primary" style="position: relative; top: 2px; left: 297.791px;"> </span></div>
+      <nav id="navbar" class="ui-corner-all" style="display: block; height: 40px; position: absolute; width: 1799px; top: 812px;">
+        <button id="previous" aria-label="Previous Question" class="ui-button ui-corner-all ui-widget" style="top: 4.5px; left: 5px;">Previous</button>
+        <button id="next" aria-label="Next Question" class="ui-button ui-corner-all ui-widget" style="top: 4.5px; left: 5px;">Next</button>
+        
+        <div id="questionbar" style="position: absolute; width: 1581.81px; cursor: pointer; top: 0.5px; left: 152.188px;">
+          <ul id="questionbarcontainer" class="questionbartable"><li class="answered" data-ident="it_231244"><button class="default" data-ident="it_231244" aria-label="Question 1"></button></li><li class="answered" data-ident="it_393434"><button class="default" data-ident="it_393434" aria-label="Question 2"></button></li><li class="current" data-ident="it_393512"><button class="default" data-ident="it_393512" aria-label="Question 3"></button></li><li class="default" data-ident="it_393391"><button class="default" data-ident="it_393391" aria-label="Question 4"></button></li><li class="default" data-ident="it_231221"><button class="default" data-ident="it_231221" aria-label="Question 5"></button></li><li class="default" data-ident="it_393513"><button class="default" data-ident="it_393513" aria-label="Question 6"></button></li><li class="default" data-ident="it_393382"><button class="default" data-ident="it_393382" aria-label="Question 7"></button></li><li class="default" data-ident="it_231245"><button class="default" data-ident="it_231245" aria-label="Question 8"></button></li><li class="default" data-ident="it_393392"><button class="default" data-ident="it_393392" aria-label="Question 9"></button></li><li class="default" data-ident="it_393536"><button class="default" data-ident="it_393536" aria-label="Question 10"></button></li><li class="default" data-ident="it_231273"><button class="default" data-ident="it_231273" aria-label="Question 11"></button></li><li class="default" data-ident="it_393660"><button class="default" data-ident="it_393660" aria-label="Question 12"></button></li><li class="default" data-ident="it_393673"><button class="default" data-ident="it_393673" aria-label="Question 13"></button></li><li class="default" data-ident="it_393835"><button class="default" data-ident="it_393835" aria-label="Question 14"></button></li><li class="default" data-ident="it_393498"><button class="default" data-ident="it_393498" aria-label="Question 15"></button></li><li class="default" data-ident="it_393828"><button class="default" data-ident="it_393828" aria-label="Question 16"></button></li><li class="default" data-ident="it_393431"><button class="default" data-ident="it_393431" aria-label="Question 17"></button></li><li class="default" data-ident="it_393397"><button class="default" data-ident="it_393397" aria-label="Question 18"></button></li><li class="default" data-ident="it_393834"><button class="default" data-ident="it_393834" aria-label="Question 19"></button></li><li class="default" data-ident="it_231223"><button class="default" data-ident="it_231223" aria-label="Question 20"></button></li><li class="default" data-ident="it_230901"><button class="default" data-ident="it_230901" aria-label="Question 21"></button></li><li class="default" data-ident="it_393837"><button class="default" data-ident="it_393837" aria-label="Question 22"></button></li><li class="default" data-ident="it_230756"><button class="default" data-ident="it_230756" aria-label="Question 23"></button></li><li class="default" data-ident="it_393396"><button class="default" data-ident="it_393396" aria-label="Question 24"></button></li><li class="default" data-ident="it_393836"><button class="default" data-ident="it_393836" aria-label="Question 25"></button></li><li class="default" data-ident="it_393412"><button class="default" data-ident="it_393412" aria-label="Question 26"></button></li><li class="default" data-ident="it_393385"><button class="default" data-ident="it_393385" aria-label="Question 27"></button></li><li class="default" data-ident="it_393485"><button class="default" data-ident="it_393485" aria-label="Question 28"></button></li><li class="default" data-ident="it_393647"><button class="default" data-ident="it_393647" aria-label="Question 29"></button></li><li class="default" data-ident="it_393619"><button class="default" data-ident="it_393619" aria-label="Question 30"></button></li><li class="default" data-ident="it_393838"><button class="default" data-ident="it_393838" aria-label="Question 31"></button></li><li class="default" data-ident="it_393497"><button class="default" data-ident="it_393497" aria-label="Question 32"></button></li><li class="default" data-ident="it_393839"><button class="default" data-ident="it_393839" aria-label="Question 33"></button></li><li class="default" data-ident="it_393496"><button class="default" data-ident="it_393496" aria-label="Question 34"></button></li></ul>
+        </div><button id="submit" class="ui-button ui-corner-all ui-widget" style="top: 4.5px; left: 1601.64px; margin-left: -5px;">Submit</button>
+      </nav>
+      </main>
+    </div>
+    <div style="display: none;">
+      
+        
+        <div id="ptControls" class="ptControls">
+          <button type="button" class="ptShow btn btn--primary-ghost">Launch PT</button>
+          <button type="button" class="ptHide btn btn--primary-ghost">Hide and Save PT</button>
+          <div class="ptError ui-widget ui-widget-content ui-corner-all ui-state-error bold" style="display:none">
+            <span class="pt-error-close ui-icon ui-icon-circle-close"></span>
+            <span class="pt-error-message">ERROR: An error has occurred with this item.  Notify your instructor for further instructions.</span>
+            <span class="pt-error-view-details">View Details</span>
+          </div>
+          <div class="ptShowRollover ui-widget ui-widget-content ui-corner-all ui-state-highlight" style="display:none">This will open the PT activity. Any changes made will be saved for the duration of this exam session</div>
+          <div class="ptHideRollover ui-widget ui-widget-content ui-corner-all ui-state-highlight" style="display:none">This will close the PT activity, but any changes made will be saved for the duration of this exam session. To resume your work on this PT Activity, click "Launch PT" to reopen and resume your work in PT.</div>
+          <div class="ptStatus ui-widget ui-widget-content ui-corner-all ui-state-highlight bold">Connecting...</div>
+        </div>
+        <div id="ptSkipped" class="ptControls">
+          <div class="ptSkipped ui-widget ui-widget-content ui-corner-all ui-state-highlight">The PT initialization was skipped. You will not be able to view the PT activity.</div>
+        </div>
+      
+      
+    </div>
+  
+
+<div tabindex="-1" role="dialog" class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front ui-dialog-buttons ui-draggable ui-resizable" aria-describedby="error-dialog" aria-labelledby="ui-id-1" style="display: none; position: absolute;"><div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle"><span id="ui-id-1" class="ui-dialog-title">Error</span><button type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" title="Close"><span class="ui-button-icon ui-icon ui-icon-closethick"></span><span class="ui-button-icon-space"> </span>Close</button></div><div id="error-dialog" class="ui-dialog-content ui-widget-content">
+        <ul class="alerts">
+          <li class="alert-error ui-state-error ui-corner-all">
+            <div class="ui-icon ui-icon-alert"></div>
+            <div class="alert-message">
+              An error occurred while connecting to the server.
+              Please check your internet connection or try again later.
+            </div>
+          </li>
+        </ul>
+      </div><div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"><div class="ui-dialog-buttonset"><button type="button" class="ui-button ui-corner-all ui-widget">OK</button></div></div><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div><div tabindex="-1" role="dialog" class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front ui-dialog-buttons" aria-describedby="tenminutewarning" aria-labelledby="ui-id-2" style="display: none;"><div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix"><span id="ui-id-2" class="ui-dialog-title">Assessment Time Warning</span><button type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" title="Close"><span class="ui-button-icon ui-icon ui-icon-closethick"></span><span class="ui-button-icon-space"> </span>Close</button></div><div id="tenminutewarning" style="" class="ui-dialog-content ui-widget-content">
+        <p class="ui-state-error-text">
+          10 Minute Warning<br><br>You have fewer than 10 minutes to complete the assessment.
+        </p>
+      </div><div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"><div class="ui-dialog-buttonset"><button type="button" class="btn btn--primary-ghost ui-button ui-corner-all ui-widget">OK</button></div></div></div></body></html>
